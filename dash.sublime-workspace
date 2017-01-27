@@ -1,0 +1,909 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"de",
+				"delay"
+			],
+			[
+				"av",
+				"avg_packetsize"
+			],
+			[
+				"res",
+				"resolution"
+			],
+			[
+				"re",
+				"resolution"
+			],
+			[
+				"par",
+				"parentname"
+			],
+			[
+				"chil",
+				"childname"
+			],
+			[
+				"getN",
+				"getNonce"
+			],
+			[
+				"set",
+				"setNonce"
+			],
+			[
+				"pare",
+				"parent_interest"
+			],
+			[
+				"onDa",
+				"onProcessingData"
+			],
+			[
+				"pos",
+				"pos_1"
+			],
+			[
+				"onObj",
+				"onObjectProcessorMiss"
+			],
+			[
+				"int",
+				"interest"
+			],
+			[
+				"onCon",
+				"onContentStoreMiss"
+			],
+			[
+				"size",
+				"size_t"
+			],
+			[
+				"new",
+				"new_interest"
+			],
+			[
+				"remote",
+				"remoteHost"
+			],
+			[
+				"enb",
+				"enbNodes"
+			],
+			[
+				"IN",
+				"Install"
+			],
+			[
+				"is",
+				"isManifest"
+			],
+			[
+				"data",
+				"dataName"
+			],
+			[
+				"seq",
+				"seqNo"
+			],
+			[
+				"file",
+				"fileSize"
+			],
+			[
+				"m_pr",
+				"m_processorInterface"
+			],
+			[
+				"renam",
+				"rename_map"
+			],
+			[
+				"quality",
+				"quality_level"
+			],
+			[
+				"qual",
+				"quality_level"
+			],
+			[
+				"sub",
+				"sub_name"
+			],
+			[
+				"name",
+				"name_map"
+			],
+			[
+				"File",
+				"FileServer"
+			],
+			[
+				"shared",
+				"shared_ptr"
+			],
+			[
+				"op",
+				"m_opFromNdnSim"
+			],
+			[
+				"send",
+				"sendInterest"
+			],
+			[
+				"Contn",
+				"ContentStore"
+			],
+			[
+				"shar",
+				"shared_from_this"
+			],
+			[
+				"m_op",
+				"m_opFromNdnSim"
+			],
+			[
+				"shart",
+				"shared_ptr"
+			],
+			[
+				"it",
+				"it_op"
+			],
+			[
+				"ndn",
+				"ndnHelper"
+			],
+			[
+				"m_",
+				"m_maxMIPS"
+			],
+			[
+				"Set",
+				"SetTypeId"
+			],
+			[
+				"in",
+				"interest"
+			],
+			[
+				"can",
+				"canForwardTo"
+			],
+			[
+				"Face",
+				"FaceId"
+			],
+			[
+				"wif",
+				"wifiMacHelper"
+			],
+			[
+				"Insta",
+				"InstallAll"
+			],
+			[
+				"make",
+				"makeNullFace"
+			],
+			[
+				"FACE",
+				"FACEID_OBJECT_PROCESSOR"
+			],
+			[
+				"getFace",
+				"getFaceTable"
+			],
+			[
+				"Uni",
+				"UniformRandomVariable"
+			],
+			[
+				"ns",
+				"ns3"
+			],
+			[
+				"pit",
+				"pitEntry"
+			],
+			[
+				"add",
+				"addReserved"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/percy/ndnSIM/ns-3/examples/socket/socket-options-ipv6.cc",
+			"settings":
+			{
+				"buffer_size": 5099,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "applications/model/http-multimedia-consumer.h",
+			"settings":
+			{
+				"buffer_size": 5526,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "applications/wscript",
+			"settings":
+			{
+				"buffer_size": 2983,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 1473 files for \"#include \"libdash.h\"\"\n\n/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-multimedia-consumer.hpp:\n   50  #include \"ns3/double.h\"\n   51  \n   52: #include \"libdash.h\"\n   53  #include \"multimedia-player.h\"\n   54  \n\n/home/percy/ndnSIM/ns-3/src/ndnSIM/wscript:\n   79  \n   80      test_code = '''\n   81: #include \"libdash.h\"\n   82  \n   83  int main()\n\n2 matches across 2 files\n",
+			"settings":
+			{
+				"buffer_size": 391,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "Packages/Makefile/Make.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				],
+				[
+					"Packages/User/OON.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/OON.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/percy/ndnSIM/ns-3/src/dash",
+		"/home/percy/ndnSIM/ns-3/src/dash/examples",
+		"/home/percy/ndnSIM/ns-3/src/dash/helper",
+		"/home/percy/ndnSIM/ns-3/src/dash/model",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms"
+	],
+	"file_history":
+	[
+		"/home/percy/ndnSIM/ns-3/src/wscript",
+		"/home/percy/ndnSIM/ns-3/src/core/wscript",
+		"/home/percy/ndnSIM/ns-3/src/core/model/string.cc",
+		"/home/percy/ndnSIM/ns-3/src/core/model/string.h",
+		"/home/percy/ndnSIM/ns-3/src/applications/wscript",
+		"/home/percy/ndnSIM/ns-3/src/applications/model/dash-fake-server.cc",
+		"/home/percy/ndnSIM/ns-3/src/applications/model/dash-fake-server.h",
+		"/home/percy/ndnSIM/ns-3/src/applications/model/dashplayer-tracer.cc",
+		"/home/percy/ndnSIM/ns-3/src/applications/model/dashplayer-tracer.h",
+		"/home/percy/ndnSIM/ns-3/src/applications/model/http-multimedia-consumer.h",
+		"/home/percy/ndnSIM/ns-3/src/applications/model/http-multimedia-consumer.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/ip-file-consumer.cpp",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/dash-client.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/examples/dash-wifi.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/examples/wscript",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/http-header.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/dash-client.h",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/ip-file-consumer",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/IP-Multimedia-Consumer",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/http-parser.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/dash-server.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/examples/dash-example.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/helper/dash-client-helper.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms/sftm-client.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/helper/dash-client-helper.h",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/mpeg-header.h",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms/raahs-client.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms/svaa-client.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms/osmp-client.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms/aaash-client.cc",
+		"/home/percy/ndnSIM/ns-3/src/dash/model/http-header.h",
+		"/home/percy/ndnSIM/ns-3/src/IP-dash/wscript",
+		"/home/percy/ndnSIM/ns-3/src/ip-dash/wscript",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/interest.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/interest.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/forwarder.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/forwarder.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/strategy.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/name.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/name.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-file-consumer.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-avc-wifi.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/model/cs/ndn-content-store.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/model/cs/content-store-impl.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/table/cs.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/table/cs.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/oon-processor.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-simple-lte",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-fake-fileserver.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/data.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-simple-lte.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-fake-fileserver.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-fileserver.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-file-simple-example1.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-simple-wifi.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-fileserver.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-app.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/face/face.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-app.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-producer.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-lte-simple.cpp",
+		"/home/percy/ndnSIM/ns-3/src/laa-wifi-coexistence/wscript",
+		"/home/percy/ndnSIM/ns-3/src/internet-apps/wscript",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/model/ndn-net-device-face.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/transport/tcp-transport.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/websocketpp/websocketpp/impl/connection_impl.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/websocketpp/websocketpp/endpoint.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/websocketpp/websocketpp/connection.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/websocketpp/tutorials/utility_client/step6.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/websocketpp/examples/utility_client/utility_client.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/face/stream-face.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/util/dummy-client-face.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/oon-file-simple.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-simple.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/data.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-simple.py",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/oon-avc-wifi.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/oon-processor.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/tests/daemon/face/tcp.t.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/name-component.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/name-component.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-multimedia-consumer.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-fake-multimedia-server.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/model/ndn-app-face.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/name_map.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/encoding/block.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/encoding/buffer.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/oon-fileserver.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/oon-fileserver.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/model/ndn-app-face.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/encoding/block.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/encoding/encoding-buffer-fwd.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-file-simple-example5-virtual.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/oon-strategy.cpp",
+		"/home/percy/ndnSIM/ns-3/wscript",
+		"/home/percy/ndnSIM/ns-3/.gitmodules",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/util/sqlite3-statement.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/table/cs-entry.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/ndn-cxx/src/util/sqlite3-statement.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-congestion-alt-topo-plugin.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/.gitmodules",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/.gitmodules",
+		"/home/percy/ndnSIM/.gitmodules",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-multimedia-simple-avc-example1.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/best-route-strategy.cpp",
+		"/home/percy/multimediaData/AVC/BBB-2s.mpd",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/apps/ndn-multimedia-consumer.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/model/ndn-l3-protocol.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/strategy.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/best-route-strategy2.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/best-route-strategy.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-file-simple-example4-multi.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-file-simple-example2-tracers.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-file-simple-example3-enhanced.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon/fw/strategy-registry.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/utils/tracers/ndn-dashplayer-tracer.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/utils/tracers/ndn-dashplayer-tracer.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples/ndn-multimedia-avc-server.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/helper/ndn-stack-helper.cpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/helper/ndn-stack-helper.hpp",
+		"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/tests/daemon/fw/strategy-tester.hpp",
+		"/home/percy/multimediaData/AVC/BBB/BigBuckBunnyNonSeg_2s_isoffmain_DIS_23009_1_v_2_1c2_2011_08_30.mpd",
+		"/home/percy/multimediaData/AVC/BBB/BigBuckBunny_2s_isoffmain_DIS_23009_1_v_2_1c2_2011_08_30.mpd",
+		"/home/lockheed/AMuStNDN/ns-3/src/ndnSIM/examples/ndn-file-simple-example4-multi.cpp",
+		"/home/lockheed/AMuStNDN/ns-3/src/ndnSIM/examples/ndn-file-simple-example1.a",
+		"/home/lockheed/AMuStNDN/ns-3/src/ndnSIM/examples/dash-ndn-wifi.cpp",
+		"/home/lockheed/AMuStNDN/ns-3/src/ndnSIM/examples/ndn-simple-wifi.cpp",
+		"/home/lockheed/AMuStNDN/ns-3/src/ndnSIM/examples/ndn-multimedia-brite-example1.cpp"
+	],
+	"find":
+	{
+		"height": 47.0
+	},
+	"find_in_files":
+	{
+		"height": 111.0,
+		"where_history":
+		[
+			"/home/percy/ndnSIM/ns-3/src/ndnSIM/",
+			"/home/percy/ndnSIM/ns-3/src/dash",
+			"/home/percy/ndnSIM/ns-3/src/dash/model",
+			"/home/percy/ndnSIM/ns-3/src/",
+			"/home/percy/ndnSIM/ns-3/src/ndnSIM/",
+			"/home/percy/ndnSIM/ns-3/src/ndnSIM/examples",
+			"/home/percy/ndnSIM/ns-3/src/ndnSIM/",
+			"/home/percy/ndnSIM/ns-3/src/ndnSIM/NFD/daemon"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"libdash",
+			"#include \"libdash.h\"",
+			"m_currentStatsTrace",
+			"FileConsumer",
+			"wifiStaNodes",
+			"staDevices",
+			"m_s",
+			"m_socket",
+			"delay",
+			"linkRate",
+			"per trace",
+			"Max Packets",
+			"Max Packets per trace file exceeded",
+			"newBitRate:",
+			"cout",
+			"tracing",
+			"45000",
+			"client",
+			"m_bitrateEstimate",
+			"GetBitRateEstimate",
+			"currRate",
+			");\n",
+			"maxBytes",
+			"delay",
+			"CalcNextSegment",
+			"SendSegment",
+			"MPEG_MAX_MESSAGE",
+			"m_bitRate",
+			"socket",
+			"SendSegment",
+			"resolution",
+			"RemoveHeader",
+			"cal",
+			"Cal",
+			"m_player",
+			"m_bitRate",
+			"httpHeader",
+			"header",
+			"SendSegment",
+			"RemoveHeader",
+			"SendSegment",
+			"m_bitrates",
+			"m_bitRate",
+			"CalcNextSegment",
+			"nextRate",
+			"m_bitRate",
+			"m_player",
+			"socket",
+			"m_bitRate",
+			"avg_packetsize",
+			"size",
+			"packet",
+			"MPEG_FRAMES_PER_SEGMENT",
+			"m_player",
+			"SetRecvCallback",
+			"HandleRead",
+			"SendSegment",
+			"size",
+			"segment",
+			"MakeNameAccessor",
+			"m_interestName",
+			"setInterestLifetime",
+			"EstimatedRTT",
+			"onProcessingData",
+			"interest",
+			"m_forwarder",
+			"onProcessingData",
+			"up_level",
+			"up",
+			"onObjectProcessorHit",
+			"onObjectProcessorMiss",
+			"onProcessingData",
+			"onContentStoreMiss",
+			"onObjectProcessorHit",
+			"onContentStoreMiss",
+			"onObjectProcessorHit",
+			"onContentStoreMiss",
+			"onProcessingData",
+			"  onProcessingData",
+			"onDataProcessing",
+			"onObjectProcessorHit",
+			"onContentStoreMiss",
+			"onObjectProcessorMiss",
+			"onProcessingData",
+			"hitCallback",
+			"pitEntry",
+			"onObjectProcessorMiss",
+			"cout",
+			"onObjectProcessor",
+			"index",
+			"onObje",
+			"m_cs",
+			"match",
+			"m_csFromNdnSim",
+			"Lookup",
+			"shared_from_this()",
+			"shared_from_this",
+			"share",
+			"getName",
+			"getname",
+			"Processor",
+			"m_forwarder.onProcessingData",
+			"onProcessingData",
+			"pos_1",
+			"pos",
+			"onObjectProcessorMiss",
+			"Hit",
+			"onProcessingData",
+			"onContentStoreHit",
+			"lastPostfix",
+			"name_map",
+			"init_name_map",
+			"NAME_MAP",
+			"name_map",
+			"NAME_MAP",
+			"init_name_map",
+			"remoteHostAddr",
+			"FileDownloadStartedTrace",
+			"cout",
+			"m_maxPayloadSize",
+			"m_MTU",
+			"Application",
+			"WifiMcsList",
+			"interPacketInterval",
+			"simTime",
+			"send(",
+			"send",
+			"numberOfNodes"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"nodes",
+			"wifiNetDevices"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/percy/ndnSIM/ns-3/examples/socket/socket-options-ipv6.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5099,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 465.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "applications/model/http-multimedia-consumer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5526,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1448,
+								1448
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 837.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "applications/wscript",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2983,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1239,
+								1239
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 828.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 391,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										164,
+										184
+									],
+									[
+										318,
+										338
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 39.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "dash.sublime-project",
+	"replace":
+	{
+		"height": 74.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"ndnSIM/examples/ndn-simple-wifi.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 450.0,
+		"last_filter": "content",
+		"selected_items":
+		[
+			[
+				"content",
+				"ContentStore"
+			],
+			[
+				"onContentStoreHit",
+				"onContentStoreHit"
+			],
+			[
+				"cost",
+				"setCost"
+			],
+			[
+				"OnOutgoingInterest",
+				"onOutgoingInterest"
+			],
+			[
+				"onOutgoingInterest",
+				"onOutgoingInterest"
+			],
+			[
+				"setFaceId",
+				"setFaceId"
+			],
+			[
+				"setface",
+				"setFaceId"
+			],
+			[
+				"face",
+				"FaceId"
+			],
+			[
+				"Object",
+				"Object"
+			],
+			[
+				"",
+				"CacheHits"
+			]
+		],
+		"width": 678.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 554.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
