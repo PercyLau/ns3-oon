@@ -25,6 +25,9 @@
 #include "ns3/boolean.h"
 #include "ns3/core-module.h"
 #include "ns3/trace-source-accessor.h"
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 
 
 
@@ -117,20 +120,21 @@ MultimediaConsumer<Parent>::StartApplication() // Called at time specified by St
   NS_LOG_DEBUG("Client(" << super::node_id << "): MPD File: " << m_mpdUrl << ", SuperClass: " << super::GetTypeId ().GetName ());
 
   // parse m_mpdUrl
-  // it should start with HTTP
-  std::string delim = "http://";
-  std::string mpd_request_name;
-  if (m_mpdUrl.find(delim) == 0)
-  {
-    std::string new_url = m_mpdUrl.substr(7);
-    // now find the next / to extract the hostname
-    int pos = new_url.find("/");
-    std::string hostname = new_url.substr(0,pos);
-    fprintf(stderr, "Client(%d): Hostname = %s\n", super::node_id, hostname.c_str());
+  // it should start with HTTP but in this computer it should start
+  //std::string delim = "http//:";
+  std::string mpd_request_name = m_mpdUrl;
+  // if (m_mpdUrl.find(delim) == 0)
+  // {
+  //   std::string new_url = m_mpdUrl.substr(7);
 
-    super::SetRemote(Ipv4Address(hostname.c_str()),80);
-    mpd_request_name = new_url.substr(pos+1);
-  }
+  //   // now find the next / to extract the hostname
+  //   int pos = new_url.find("/");
+  //   std::string hostname = new_url.substr(0,pos);
+  //   fprintf(stderr, "Client(%d): Hostname = %s\n", super::node_id, hostname.c_str());
+
+  //   super::SetRemote(Ipv4Address(hostname.c_str()),80);
+  //   mpd_request_name = new_url.substr(pos+1);
+  // }
 
 
   std::stringstream ss_tempDir;
@@ -144,7 +148,7 @@ MultimediaConsumer<Parent>::StartApplication() // Called at time specified by St
   NS_LOG_DEBUG("Client(" << super::node_id << "): Temporary Directory: " << m_tempDir);
   ns3::SystemPath::MakeDirectories(m_tempDir);
 
-  m_tempMpdFile = m_tempDir + "/mpd.xml.gz";
+  m_tempMpdFile = m_tempDir + "/temp.mpd";
 
   m_mpdParsed = false;
   m_initSegmentIsGlobal = false;
@@ -241,26 +245,22 @@ template<class Parent>
 bool
 MultimediaConsumer<Parent>::DecompressFile ( std::string source, std::string filename )
 {
-  NS_LOG_FUNCTION(source << filename);
-  std::ifstream infile( source.c_str(), std::ios_base::in | std::ios_base::binary ); //Creates the input stream
+  std::ifstream file( source.c_str(), std::ios_base::in | std::ios_base::binary ); //Creates the input stream
+
   //Tests if the file is being opened correctly.
-  if ( !infile )
+  if ( !file )
   {
    std::cerr<< "Can't open file: " << source << std::endl;
    return false;
   }
 
-  // read
-  std::string compressed_str((std::istreambuf_iterator<char>(infile)),
-                 std::istreambuf_iterator<char>());
-
   try
   {
-    std::string decompressed = zlib_decompress_string(compressed_str);
-
-    std::ofstream outfile( filename.c_str(), std::ios_base::out |  std::ios_base::binary ); //Creates the output stream
-    outfile << decompressed;
-    outfile.close();
+    std::ofstream out( filename.c_str(), std::ios_base::out |  std::ios_base::binary ); //Creates the output stream
+    boost::iostreams::filtering_streambuf<boost::iostreams::input> in; //Sets the filters to be used in the input stream
+    in.push( boost::iostreams::gzip_decompressor()); //Decompress being used on the file in the input stream
+    in.push( file );
+    boost::iostreams::copy(in, out ); //Copy the decompressed file to the output stream
   }
   catch(std::exception& e)
   {
@@ -268,8 +268,6 @@ MultimediaConsumer<Parent>::DecompressFile ( std::string source, std::string fil
     NS_LOG_DEBUG(e.what() << " Assuming file was not zipped!");
     return false;
   }
-
-
   return true;
 }
 
@@ -294,7 +292,10 @@ MultimediaConsumer<Parent>::OnMpdFile()
 
 
   NS_LOG_DEBUG("MPD File " << m_tempMpdFile << " received. Parsing now...");
-
+  // volatile int temp = 0;
+  // while (temp < 10000000){
+  //   temp ++;
+  // }
 
   dash::IDASHManager *manager;
   manager = CreateDashManager();
@@ -336,19 +337,20 @@ MultimediaConsumer<Parent>::OnMpdFile()
     // starts with http://
     std::string delim = "http://";
 
-    if (m_baseURL.find(delim) == 0)
-    {
-      std::string hostname = m_baseURL.substr(7);
-      // get host
-      m_baseURL = hostname.substr(hostname.find("/")+1);
+    // if (m_baseURL.find(delim) == 0)
+    // {
+    //   std::string hostname = m_baseURL.substr(7);
+    //   // get host
+    //   m_baseURL = hostname.substr(hostname.find("/")+1);
 
-      hostname = hostname.substr(0, hostname.find("/"));
-      super::SetRemote(Ipv4Address(hostname.c_str()),80);
-      NS_LOG_DEBUG("Client(" << super::node_id << "): Base URL: " << m_baseURL << ", hostname = " << hostname);
-    } else {
-      NS_LOG_ERROR("Client(" << super::node_id << "): Could not properly parse baseURL. Expected 'http://ipAddress/folder/blub/'.");
-      return;
-    }
+    //   hostname = hostname.substr(0, hostname.find("/"));
+    //   super::SetRemote(Ipv4Address(hostname.c_str()),80);
+    //   NS_LOG_DEBUG("Client(" << super::node_id << "): Base URL: " << m_baseURL << ", hostname = " << hostname);
+    // } else {
+    //   NS_LOG_ERROR("Client(" << super::node_id << "): Could not properly parse baseURL. Expected 'http://ipAddress/folder/blub/'.");
+    //   return;
+    // }
+    
   }
   else
   {
@@ -394,8 +396,6 @@ MultimediaConsumer<Parent>::OnMpdFile()
       std::cerr << "Alternative: " << adaptationSet->GetRepresentation().at(0)->GetSegmentBase()->GetInitialization()->GetSourceURL() << std::endl;
     }*/
   }
-
-
 
   // get all representations
   std::vector<IRepresentation*> reps = adaptationSet->GetRepresentation();
@@ -456,7 +456,6 @@ MultimediaConsumer<Parent>::OnMpdFile()
 
     NS_LOG_DEBUG("ID = " << repId << ", DepId=" <<
         dependencies.size() << ", width=" << width << ", height=" << height << ", bwReq=" << requiredDownloadSpeed);
-
 
     if (!startRepresentationSelected && m_startRepresentationId != "lowest")
     {

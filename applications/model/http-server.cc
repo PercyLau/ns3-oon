@@ -213,7 +213,9 @@ HttpServerApplication::StartApplication (void)
   // parse meta data csv file
 
   // read m_metaDataFile and fill m_fileSizes
-  std::ifstream infile(m_metaDataFile.c_str());
+  m_metaDataContentDirectory = m_metaDataContentDirectory+"/";
+  std::string filename = m_metaDataContentDirectory+m_metaDataFile;
+  std::ifstream infile(filename.c_str());
   if (!infile.is_open())
   {
     fprintf(stderr, "HttpServerFakeClientSocket: Error opening %s\n", m_metaDataFile.c_str());
@@ -335,10 +337,6 @@ HttpServerApplication::DoFinishSocket(uint64_t socket_id)
 }
 
 
-
-
-
-
 uint64_t
 HttpServerApplication::RegisterSocket (Ptr<Socket> socket)
 {
@@ -346,9 +344,5 @@ HttpServerApplication::RegisterSocket (Ptr<Socket> socket)
 
   return this->m_lastSocketID++;
 }
-
-
-
-
 
 }

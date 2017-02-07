@@ -17,6 +17,8 @@
 //
 // Author: Christian Kreuzberger <christian.kreuzberger@itec.aau.at>
 //
+
+
 #include "dash-server-helper.h"
 #include "ns3/http-server.h"
 #include "ns3/http-client.h"
@@ -34,8 +36,7 @@ namespace ns3 {
 
 DASHServerHelper::DASHServerHelper (Address address, uint16_t port, std::string Hostname,
   std::string MPDDirectory, std::string RepresentationsMetaDataFiles,
-  std::string RepresentationsSegmentsDirectory)
-{
+  std::string RepresentationsSegmentsDirectory){
   m_factory.SetTypeId (DASHFakeServerApplication::GetTypeId ());
   SetAttribute ("ListeningAddress", AddressValue (address));
   SetAttribute ("Port", UintegerValue (port));
@@ -47,8 +48,7 @@ DASHServerHelper::DASHServerHelper (Address address, uint16_t port, std::string 
 
 DASHServerHelper::DASHServerHelper (Ipv4Address address, uint16_t port, std::string Hostname,
   std::string MPDDirectory, std::string RepresentationsMetaDataFiles,
-  std::string RepresentationsSegmentsDirectory)
-{
+  std::string RepresentationsSegmentsDirectory){
   m_factory.SetTypeId (DASHFakeServerApplication::GetTypeId ());
   SetAttribute ("ListeningAddress", AddressValue (address));
   SetAttribute ("Port", UintegerValue (port));
@@ -60,8 +60,7 @@ DASHServerHelper::DASHServerHelper (Ipv4Address address, uint16_t port, std::str
 
 DASHServerHelper::DASHServerHelper (Ipv6Address address, uint16_t port, std::string Hostname,
   std::string MPDDirectory, std::string RepresentationsMetaDataFiles,
-  std::string RepresentationsSegmentsDirectory)
-{
+  std::string RepresentationsSegmentsDirectory){
   m_factory.SetTypeId (DASHFakeServerApplication::GetTypeId ());
   SetAttribute ("ListeningAddress", AddressValue (address));
   SetAttribute ("Port", UintegerValue (port));
@@ -74,27 +73,23 @@ DASHServerHelper::DASHServerHelper (Ipv6Address address, uint16_t port, std::str
 void
 DASHServerHelper::SetAttribute (
   std::string name,
-  const AttributeValue &value)
-{
+  const AttributeValue &value){
   m_factory.Set (name, value);
 }
 
 ApplicationContainer
-DASHServerHelper::Install (Ptr<Node> node) const
-{
+DASHServerHelper::Install (Ptr<Node> node) const{
   return ApplicationContainer (InstallPriv (node));
 }
 
 ApplicationContainer
-DASHServerHelper::Install (std::string nodeName) const
-{
+DASHServerHelper::Install (std::string nodeName) const{
   Ptr<Node> node = Names::Find<Node> (nodeName);
   return ApplicationContainer (InstallPriv (node));
 }
 
 ApplicationContainer
-DASHServerHelper::Install (NodeContainer c) const
-{
+DASHServerHelper::Install (NodeContainer c) const{
   ApplicationContainer apps;
   for (NodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
     {
@@ -105,15 +100,11 @@ DASHServerHelper::Install (NodeContainer c) const
 }
 
 Ptr<Application>
-DASHServerHelper::InstallPriv (Ptr<Node> node) const
-{
+DASHServerHelper::InstallPriv (Ptr<Node> node) const{
   Ptr<Application> app = m_factory.Create<DASHFakeServerApplication> ();
   node->AddApplication (app);
 
   return app;
 }
-
-
-
 
 } // namespace ns3

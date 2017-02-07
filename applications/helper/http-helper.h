@@ -19,7 +19,6 @@
 //
 #ifndef HTTP_HELPER_H
 #define HTTP_HELPER_H
-
 #include <stdint.h>
 #include "ns3/application-container.h"
 #include "ns3/node-container.h"
@@ -28,7 +27,6 @@
 #include "ns3/ipv6-address.h"
 
 namespace ns3 {
-
 /**
  * \ingroup Http
  * \brief Create a server application which waits for input TCP packets

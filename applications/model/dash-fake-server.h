@@ -78,6 +78,8 @@ protected:
 
   std::string ImportDASHRepresentations (std::string mpdMetaDataFilename, int video_id);
 
+  bool CompressString(std::string input, std::stringstream& outputStream);
+
 
   bool ConnectionRequested (Ptr<Socket> socket, const Address& address);
   void ConnectionAccepted (Ptr<Socket> socket, const Address& address);
