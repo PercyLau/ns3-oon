@@ -600,7 +600,7 @@ HttpClientApplication::OnFileReceived(unsigned status, unsigned length)
 
   //lastDownloadBitrate = downloadSpeed * 8.0; // do not forget to do *8, as this is a BIT-rate
 
-  m_downloadFinishedTrace(this, this->m_fileToRequest, lastDownloadBitrate, milliSeconds);
+  m_downloadFinishedTrace(this, this->m_fileToRequest, lastDownloadBitrate, milliSeconds/1000);
 }
 
 
@@ -698,8 +698,10 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
     }
     else if (m_bytesRecv > requested_content_length)
     {
+      //OnFileReceived(0, requested_content_length);
+      //break;
       fprintf(stderr, "Client(%d)::HandleRead(time=%f) Expected only %d bytes, but received already %d bytes\n",
-        node_id, Simulator::Now().GetSeconds(), requested_content_length, m_bytesRecv);
+      node_id, Simulator::Now().GetSeconds(), requested_content_length, m_bytesRecv);
     }
 
   }

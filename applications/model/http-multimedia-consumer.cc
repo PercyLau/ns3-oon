@@ -586,7 +586,7 @@ MultimediaConsumer<Parent>::OnMultimediaFile()
     //fprintf(stderr, "lastBitrate = %f\n", super::lastDownloadBitrate);
     mPlayer->SetLastDownloadBitRate(super::lastDownloadBitrate);
 
-    fprintf(stderr, "Last Download Speed = %f kBit/s\n", super::lastDownloadBitrate/1000.0);
+    fprintf(stderr, "Last Download Speed = %f kilobits per second\n", super::lastDownloadBitrate/1024);
 
 
     // check if there is enough space in buffer

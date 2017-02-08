@@ -236,7 +236,8 @@ HttpServerFakeClientSocket::FinishedIncomingData(Ptr<Socket> socket, Address fro
     uint8_t tmp[4096];
 
 
-    if (std::find(m_virtualFiles.begin(), m_virtualFiles.end(), filename) != m_virtualFiles.end())
+    //if (std::find(m_virtualFiles.begin(), m_virtualFiles.end(), filename) != m_virtualFiles.end())
+    if (false)
     {
       // handle virtual payload
       // fill tmp with some random data

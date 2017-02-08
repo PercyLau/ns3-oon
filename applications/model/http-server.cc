@@ -41,6 +41,8 @@
 #include "ns3/pointer.h"
 
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "http-server.h"
 
@@ -232,14 +234,18 @@ HttpServerApplication::StartApplication (void)
       if (pos != std::string::npos)
       {
         std::string line_filename = line.substr(0, pos);
-        std::string line_filesize = line.substr(pos+1);
-        line_filesize.substr(0, line_filesize.length()-1);
-        int fs = atoi(line_filesize.c_str());
+        std::string file_address = m_metaDataContentDirectory + line_filename;
+
         //fprintf(stderr, "First=%s,Second=%s\n", line_filename.c_str(), line_filesize.c_str());
-        m_fileSizes[m_metaDataContentDirectory + line_filename] = fs;
+        struct stat stat_buf;
+        int rc = stat(file_address.c_str(), &stat_buf);
+        if (rc == 0)
+        {
+          m_fileSizes[file_address] = stat_buf.st_size;
+        }
 
-        fprintf( stderr, "Added '%s' with size of  '%f' kbits to the store!\n", (m_contentDir + m_metaDataContentDirectory + line_filename).c_str(), fs );
-
+        fprintf( stderr, "Added '%s' with size of  '%d' kbits to the store!\n", (m_contentDir + m_metaDataContentDirectory + line_filename).c_str(), stat_buf.st_size );
+        //%s string, %d digital, %f float
         m_virtualFiles.push_back(m_metaDataContentDirectory + line_filename);
       }
     }
