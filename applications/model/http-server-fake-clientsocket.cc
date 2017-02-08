@@ -164,7 +164,8 @@ long HttpServerFakeClientSocket::GetFileSize(std::string filename)
   // check if is already in m_fileSizes
   if (m_fileSizes.find(filename) != m_fileSizes.end())
   {
-    return m_fileSizes[filename];
+    long res = m_fileSizes[filename];
+    return res;
   }
   // else: query disk for file size
 
@@ -239,7 +240,7 @@ HttpServerFakeClientSocket::FinishedIncomingData(Ptr<Socket> socket, Address fro
     {
       // handle virtual payload
       // fill tmp with some random data
-      fprintf(stderr, "Server(%ld): Generating virtual payload of size %ld ...\n", m_socket_id, filesize);
+      fprintf(stderr, "Server(%ld): Generating virtual payload of size %f ...\n", m_socket_id, filesize);
 
 
       this->m_totalBytesToTx += filesize;

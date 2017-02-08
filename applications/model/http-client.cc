@@ -593,16 +593,14 @@ HttpClientApplication::OnFileReceived(unsigned status, unsigned length)
 
   m_finished_download = true;
   _finished_time = Simulator::Now().GetMilliSeconds ();
+  double milliSeconds = _finished_time - _start_time;
+  //double seconds = ((double)milliSeconds)/ 1000.0;
 
+  lastDownloadBitrate = ((double)requested_content_length*8000)/(milliSeconds);
 
-  long milliSeconds = _finished_time - _start_time;
-  double seconds = ((double)milliSeconds)/ 1000.0;
+  //lastDownloadBitrate = downloadSpeed * 8.0; // do not forget to do *8, as this is a BIT-rate
 
-  double downloadSpeed = ((double)requested_content_length)/((double)seconds);
-
-  lastDownloadBitrate = downloadSpeed * 8.0; // do not forget to do *8, as this is a BIT-rate
-
-  m_downloadFinishedTrace(this, this->m_fileToRequest, downloadSpeed, milliSeconds);
+  m_downloadFinishedTrace(this, this->m_fileToRequest, lastDownloadBitrate, milliSeconds);
 }
 
 

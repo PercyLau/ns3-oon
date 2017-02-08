@@ -82,7 +82,7 @@ HttpServerFakeVirtualClientSocket::FinishedIncomingData(Ptr<Socket> socket, Addr
     {
       // handle virtual payload
       // fill tmp with some random data
-      fprintf(stderr, "VirtualServer(%ld): Generating virtual payload with size %ld ...\n", m_socket_id, filesize);
+      fprintf(stderr, "VirtualServer(%ld): Generating virtual payload with size %f ...\n", m_socket_id, filesize);
       for (int i = 0; i < 4096; i++)
       {
         tmp[i] = (uint8_t)rand();

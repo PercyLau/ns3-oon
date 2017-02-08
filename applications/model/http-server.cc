@@ -233,12 +233,14 @@ HttpServerApplication::StartApplication (void)
       {
         std::string line_filename = line.substr(0, pos);
         std::string line_filesize = line.substr(pos+1);
+        line_filesize.substr(0, line_filesize.length()-1);
+        int fs = atoi(line_filesize.c_str());
         //fprintf(stderr, "First=%s,Second=%s\n", line_filename.c_str(), line_filesize.c_str());
-        m_fileSizes[m_contentDir + m_metaDataContentDirectory + line_filename] = atoi(line_filesize.c_str());
+        m_fileSizes[m_metaDataContentDirectory + line_filename] = fs;
 
-        fprintf(stderr, "Added '%s' to the store!\n", (m_contentDir + m_metaDataContentDirectory + line_filename).c_str());
+        fprintf( stderr, "Added '%s' with size of  '%f' kbits to the store!\n", (m_contentDir + m_metaDataContentDirectory + line_filename).c_str(), fs );
 
-        m_virtualFiles.push_back(m_contentDir + m_metaDataContentDirectory + line_filename);
+        m_virtualFiles.push_back(m_metaDataContentDirectory + line_filename);
       }
     }
   }

@@ -239,7 +239,7 @@
 			"file": "applications/wscript",
 			"settings":
 			{
-				"buffer_size": 2983,
+				"buffer_size": 3069,
 				"line_ending": "Unix"
 			}
 		},
@@ -322,11 +322,7 @@
 	},
 	"expanded_folders":
 	[
-		"/home/percy/ndnSIM/ns-3/src/dash",
-		"/home/percy/ndnSIM/ns-3/src/dash/examples",
-		"/home/percy/ndnSIM/ns-3/src/dash/helper",
-		"/home/percy/ndnSIM/ns-3/src/dash/model",
-		"/home/percy/ndnSIM/ns-3/src/dash/model/algorithms"
+		"/home/percy/ndnSIM/ns-3/src/dash"
 	],
 	"file_history":
 	[
@@ -699,15 +695,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2983,
+						"buffer_size": 3069,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1239,
-								1239
+								0,
+								0
 							]
 						],
 						"settings":
