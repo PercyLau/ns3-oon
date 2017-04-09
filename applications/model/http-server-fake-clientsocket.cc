@@ -178,7 +178,7 @@ long HttpServerFakeClientSocket::GetFileSize(std::string filename)
     return stat_buf.st_size;
   }
   // else: file not found
-  fprintf(stderr, "Server(%ld) ERROR: File not found: '%s'\n", m_socket_id, filename.c_str());
+  fprintf(stderr, "HTTP Server(%ld) ERROR: File not found: '%s'\n", m_socket_id, filename.c_str());
   return -1;
 }
 
