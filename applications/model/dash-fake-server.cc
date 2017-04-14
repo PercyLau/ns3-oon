@@ -140,7 +140,7 @@
 
     std::string line;
     std::vector<std::string> vecLine;
-    fprintf(stderr, "Reading Multimedia Specifics from %s\n", mpdMetaDataFilename.c_str());
+    //fprintf(stderr, "Reading Multimedia Specifics from %s\n", mpdMetaDataFilename.c_str());
 
     int segment_duration = 0;
     int number_of_segments = 0;
@@ -429,7 +429,7 @@
       std::stringstream compressedMpdDataStream;
       CompressString(mpdData, compressedMpdDataStream);
       std::string compressedMpdData =  compressedMpdDataStream.str();
-      fprintf(stderr, "Size of compressed = %ld, uncompressed = %ld\n", compressedMpdData.length(), mpdData.length());
+      //fprintf(stderr, "Size of compressed = %ld, uncompressed = %ld\n", compressedMpdData.length(), mpdData.length());
 
 
       std::stringstream SSMpdFilename;
@@ -438,7 +438,7 @@
 
       m_fileSizes[SSMpdFilename.str()] = compressedMpdData.size();
 
-      fprintf(stderr, "Adding '%s' to m_fileSizes with size %ld\n", SSMpdFilename.str().c_str(), compressedMpdData.size());
+      //fprintf(stderr, "Adding '%s' to m_fileSizes with size %ld\n", SSMpdFilename.str().c_str(), compressedMpdData.size());
 
 
       m_mpdFileContents[SSMpdFilename.str()] = compressedMpdData;

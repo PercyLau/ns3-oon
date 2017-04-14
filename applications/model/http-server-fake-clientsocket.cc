@@ -200,11 +200,11 @@ HttpServerFakeClientSocket::LogStateChange(const ns3::TcpSocket::TcpStates_t old
 void
 HttpServerFakeClientSocket::FinishedIncomingData(Ptr<Socket> socket, Address from, std::string data)
 {
-  fprintf(stderr, "Server(%ld)::FinishedIncomingData(socket,data=str(%ld))\n", m_socket_id, data.length());
+ // fprintf(stderr, "Server(%ld)::FinishedIncomingData(socket,data=str(%ld))\n", m_socket_id, data.length());
   // now parse this request (TODO) and reply
   std::string filename = m_content_dir  + ParseHTTPHeader(data);
 
-  fprintf(stderr, "Server(%ld): Opening '%s'\n", m_socket_id, filename.c_str());
+  //fprintf(stderr, "Server(%ld): Opening '%s'\n", m_socket_id, filename.c_str());
 
   long filesize = GetFileSize(filename);
 
@@ -268,7 +268,7 @@ HttpServerFakeClientSocket::FinishedIncomingData(Ptr<Socket> socket, Address fro
       } */
     } else
     {
-      fprintf(stderr, "Server(%ld): Opening file on disk with size %ld ...\n", m_socket_id, filesize);
+      //fprintf(stderr, "Server(%ld): Opening file on disk with size %ld ...\n", m_socket_id, filesize);
       // handle actual payload
       FILE* fp = fopen(filename.c_str(), "rb");
 

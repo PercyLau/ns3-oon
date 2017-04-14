@@ -81,7 +81,7 @@ MultimediaConsumer<Parent>::GetTypeId(void)
       .template AddAttribute("UserId", "The ID of this user (optional)", UintegerValue(0),
                     MakeUintegerAccessor(&MultimediaConsumer<Parent>::m_userId), MakeUintegerChecker<uint32_t>())
       .AddTraceSource("PlayerTracer", "Trace Player consumes of multimedia data",
-                      MakeTraceSourceAccessor(&MultimediaConsumer<Parent>::m_playerTracer), "bla")
+                      MakeTraceSourceAccessor(&MultimediaConsumer<Parent>::m_playerTracer))
                     ;
 
   return tid;
@@ -276,7 +276,7 @@ template<class Parent>
 void
 MultimediaConsumer<Parent>::OnMpdFile()
 {
-  fprintf(stderr, "Client(%d): On MPD File...\n", super::node_id);
+  //fprintf(stderr, "Client(%d): On MPD File...\n", super::node_id);
 
   // check if file was gziped, if not, we use it as is
   if (m_tempMpdFile.find(".gz") != std::string::npos)
@@ -558,7 +558,7 @@ template<class Parent>
 void
 MultimediaConsumer<Parent>::OnMultimediaFile()
 {
-  fprintf(stderr, "Client(%d): On Multimedia File '%s'\n", super:: node_id,super::m_fileToRequest.c_str());
+  //fprintf(stderr, "Client(%d): On Multimedia File '%s'\n", super:: node_id,super::m_fileToRequest.c_str());
 
   if (!super::m_active)
     return;
@@ -586,7 +586,7 @@ MultimediaConsumer<Parent>::OnMultimediaFile()
     //fprintf(stderr, "lastBitrate = %f\n", super::lastDownloadBitrate);
     mPlayer->SetLastDownloadBitRate(super::lastDownloadBitrate);
 
-    fprintf(stderr, "Last Download Speed = %f kilobits per second\n", super::lastDownloadBitrate/1024);
+    //fprintf(stderr, "Last Download Speed = %f kilobits per second\n", super::lastDownloadBitrate/1024);
 
 
     // check if there is enough space in buffer
@@ -618,7 +618,7 @@ MultimediaConsumer<Parent>::OnFileReceived(unsigned status, unsigned length)
   // make sure that the file is being properly retrieved by the super class first!
   super::OnFileReceived(status, length);
 
-  fprintf(stderr, "Client: On File Received called\n");
+  //fprintf(stderr, "Client: On File Received called\n");
 
   if (!m_mpdParsed)
   {
@@ -688,7 +688,7 @@ MultimediaConsumer<Parent>::DownloadSegment()
   requestedSegmentNr = 0;
 
   requestedSegmentURL = mPlayer->GetAdaptationLogic()->GetNextSegment(&requestedSegmentNr, &requestedRepresentation, &m_hasDownloadedAllSegments);
-  fprintf(stderr, "Multimediaconsumer::Downloadsegment()\n");
+  //fprintf(stderr, "Multimediaconsumer::Downloadsegment()\n");
   if(m_hasDownloadedAllSegments) // DONE
   {
     NS_LOG_DEBUG("No more segments available for download!\n");

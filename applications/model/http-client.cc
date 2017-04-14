@@ -163,7 +163,7 @@ HttpClientApplication::LogStateChange(const ns3::TcpSocket::TcpStates_t old_stat
   NS_LOG_DEBUG("HttpClient(" << this << "): Socket State Change " << ns3::TcpSocket::TcpStateName[old_state] << " -> "
       << ns3::TcpSocket::TcpStateName[new_state]);
 
-  fprintf(stderr, "Client(%d): Time=%f Socket %s -> %s\n", node_id, Simulator::Now().GetSeconds(), ns3::TcpSocket::TcpStateName[old_state], ns3::TcpSocket::TcpStateName[new_state]);
+ // fprintf(stderr, "Client(%d): Time=%f Socket %s -> %s\n", node_id, Simulator::Now().GetSeconds(), ns3::TcpSocket::TcpStateName[old_state], ns3::TcpSocket::TcpStateName[new_state]);
 }
 
 
@@ -396,7 +396,7 @@ void
 HttpClientApplication::OnReadySend (Ptr<Socket> localSocket, uint32_t txSpace)
 {
   NS_LOG_FUNCTION (this);
-  fprintf(stderr, "HttpClientApp::OnReadySend()\n");
+  //fprintf(stderr, "HttpClientApp::OnReadySend()\n");
   if (!m_sentGetRequest)
   {
     m_sentGetRequest = true;
@@ -414,7 +414,7 @@ HttpClientApplication::DoSendGetRequest (Ptr<Socket> localSocket, uint32_t txSpa
 
   // Create HTTP 1.1 compatible request
   std::stringstream requestSS;
-  fprintf(stderr, "Client(%d, %f): Executing  'GET %s'\n", node_id, Simulator::Now().GetSeconds(), m_fileToRequest.c_str());
+  //fprintf(stderr, "Client(%d, %f): Executing  'GET %s'\n", node_id, Simulator::Now().GetSeconds(), m_fileToRequest.c_str());
   requestSS << "GET " << m_fileToRequest << " HTTP/1.1" << CRLF;
   requestSS << "Host: " << m_hostName << CRLF;
   //requestSS << "Pragma: no-cache" << CRLF;
@@ -492,7 +492,7 @@ HttpClientApplication::ParseResponseHeader(const uint8_t* buffer, size_t len, in
   Content-Length: {len}CRLFCRLF;
   */
 
-  fprintf(stderr, "Client(%d): Parsing Response Header of length %ld\n", node_id, len);
+  //fprintf(stderr, "Client(%d): Parsing Response Header of length %ld\n", node_id, len);
   const char* strbuffer = (const char*) buffer;
 
   //fprintf(stderr, "header=\n%s\n", buffer);
@@ -589,7 +589,7 @@ HttpClientApplication::OnFileReceived(unsigned status, unsigned length)
   if (!m_active)
     return;
 
-  fprintf(stderr, "Client(%d, %f): File received\n", node_id, Simulator::Now().GetSeconds());
+ //fprintf(stderr, "Client(%d, %f): File received\n", node_id, Simulator::Now().GetSeconds());
 
   m_finished_download = true;
   _finished_time = Simulator::Now().GetMilliSeconds ();
@@ -600,7 +600,7 @@ HttpClientApplication::OnFileReceived(unsigned status, unsigned length)
 
   //lastDownloadBitrate = downloadSpeed * 8.0; // do not forget to do *8, as this is a BIT-rate
 
-  m_downloadFinishedTrace(this, this->m_fileToRequest, lastDownloadBitrate, milliSeconds/1000);
+  m_downloadFinishedTrace(this, this->m_fileToRequest, lastDownloadBitrate, milliSeconds);
 }
 
 

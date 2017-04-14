@@ -1,6 +1,6 @@
-
-#ifndef NDN_DASHPLAYER_TRACER_H
-#define NDN_DASHPLAYER_TRACER_H
+// since NDN consumer is from App::Application, the tracer design is totally different here.
+#ifndef DASHPLAYER_TRACER_H
+#define DASHPLAYER_TRACER_H
 
 #include "ns3/node-container.h"
 #include "ns3/callback.h"
@@ -59,19 +59,19 @@ public:
   static void
   Install(const NodeContainer& nodes, const std::string& file);
 
-  /**
-   * @brief Helper method to install tracers on a specific simulation node
-   *
-   * @param nodes Nodes on which to install tracer
-   * @param file File to which traces will be written.  If filename is -, then std::out is used
-   * @param averagingPeriod How often data will be written into the trace file (default, every half
-   *second)
-   *
-   * @returns a tuple of reference to output stream and list of tracers. !!! Attention !!! This
-   *tuple needs to be preserved
-   *          for the lifetime of simulation, otherwise SEGFAULTs are inevitable
-   *
-   */
+  // *
+  //  * @brief Helper method to install tracers on a specific simulation node
+  //  *
+  //  * @param nodes Nodes on which to install tracer
+  //  * @param file File to which traces will be written.  If filename is -, then std::out is used
+  //  * @param averagingPeriod How often data will be written into the trace file (default, every half
+  //  *second)
+  //  *
+  //  * @returns a tuple of reference to output stream and list of tracers. !!! Attention !!! This
+  //  *tuple needs to be preserved
+  //  *          for the lifetime of simulation, otherwise SEGFAULTs are inevitable
+  //  *
+   
   static void
   Install(Ptr<Node> node, const std::string& file);
 

@@ -244,7 +244,7 @@ HttpServerApplication::StartApplication (void)
           m_fileSizes[file_address] = stat_buf.st_size;
         }
 
-        fprintf( stderr, "Added '%s' with size of  '%d' kbits to the store!\n", (m_contentDir + m_metaDataContentDirectory + line_filename).c_str(), stat_buf.st_size );
+        //fprintf( stderr, "Added '%s' with size of  '%d' kbits to the store!\n", (m_contentDir + m_metaDataContentDirectory + line_filename).c_str(), stat_buf.st_size );
         //%s string, %d digital, %f float
         m_virtualFiles.push_back(m_metaDataContentDirectory + line_filename);
       }
