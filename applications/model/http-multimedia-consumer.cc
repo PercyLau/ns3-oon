@@ -60,7 +60,7 @@ MultimediaConsumer<Parent>::GetTypeId(void)
                     MakeUintegerAccessor(&MultimediaConsumer<Parent>::m_screenHeight), MakeUintegerChecker<uint32_t>())
       .template AddAttribute("MaxBufferedSeconds", "Maximum amount of buffered seconds allowed", UintegerValue(30),
                     MakeUintegerAccessor(&MultimediaConsumer<Parent>::m_maxBufferedSeconds), MakeUintegerChecker<uint32_t>())
-      .template AddAttribute("DeviceType", "PC, Laptop, Tablet, Phone, Game Console", StringValue("PC"),
+      .template AddAttribute("DeviceType", "PC, Laptop, Tablet, Phone, Game Console", StringValue("Phone"),
                     MakeStringAccessor(&MultimediaConsumer<Parent>::m_deviceType), MakeStringChecker())
       .template AddAttribute("AllowUpscale", "Define whether or not the client has capabilities to upscale content with lower resolutions", BooleanValue(true),
                     MakeBooleanAccessor (&MultimediaConsumer<Parent>::m_allowUpscale), MakeBooleanChecker ())
