@@ -313,7 +313,21 @@ HttpClientApplication::StartApplication (void)
     fclose(fp);
   }
 
-  RequestDNShostname(m_hostName);
+
+  if(!m_DNSAddress.IsInvalid()){
+    RequestDNShostname(m_hostName);
+  }else{
+    TryEstablishConnection();
+  }
+  //get server IP via DNS
+  // if (m_peerAddress.IsInvalid()){
+  //   if(!m_DNSAddress.IsInvalid()){
+  //     RequestDNShostname(m_hostName);
+  //   }
+  // }
+  // else{
+  //     TryEstablishConnection();
+  // }
 
   m_lastStatsReportedBytesRecv = 0;
   m_lastStatsReportedBytesSent = 0;
@@ -417,8 +431,6 @@ HttpClientApplication::ConnectionComplete (Ptr<Socket> socket)
   fprintf(stderr, "Client successfully connected at time=%f\n", Simulator::Now().GetSeconds());
 
   m_success_connecting++;
-
-
   // Get ready to receive.
   socket->SetRecvCallback (MakeCallback (&HttpClientApplication::HandleRead, this));
 }
@@ -565,6 +577,7 @@ HttpClientApplication::ParseResponseHeader(const uint8_t* buffer, size_t len, in
       if (iStatusCode == 404)
       {
         fprintf(stderr, "Client(%d): ParseHeader: Status Code 404, not found!\n", node_id);
+        return -1;
       } else
       {
         // find Content-Length
@@ -599,28 +612,33 @@ HttpClientApplication::ParseResponseHeader(const uint8_t* buffer, size_t len, in
               return pos+4; // +4 to skip CRLFCRLF
             } else {
               fprintf(stderr, "ERROR: could not find where body begins\n");
+              return -1;
             }
           }
           else
           {
             fprintf(stderr, "ERROR: No CRLF found?!?\n");
+            return -1;
           }
 
         } else
         {
           fprintf(stderr, "ERROR: Server did not reply Content-Length Header field\n");
+          return -1;
         }
       }
 
     } else
     {
       fprintf(stderr, "Invalid HTTP Response, %s\n", strbuffer);
+      return -1;
     }
 
   } else
   {
     fprintf(stderr, "Not sure what this response header means\n");
     fprintf(stderr, "Result=%s\n", strbuffer);
+    return -1;
   }
 
 
@@ -677,16 +695,11 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
 
   uint32_t bytes_recv_this_time = 0;
 
-  while (true)
-  {
+  while (true){
     packet = socket->RecvFrom (from);
-
-    if (!(packet))
-    {
+    if (!(packet)){
       break;
     }
-
-
     packet->RemoveAllPacketTags ();
     packet->RemoveAllByteTags ();
     // PARSE PACKET
@@ -694,9 +707,7 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
     _tmpbuffer[packet_size] = '\0';
 
     bytes_recv_this_time += packet_size;
-
-    if (m_is_first_packet)
-    {
+    if (m_is_first_packet){
       m_is_first_packet = false;
       // parse header
       int status_code = 0;
@@ -716,9 +727,8 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
 
         fclose(fp);
       }
-
-
-    } else {
+    } 
+    else {
       m_bytesRecv += packet_size;
 
       // write to file
@@ -748,7 +758,6 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
       fprintf(stderr, "Client(%d)::HandleRead(time=%f) Expected only %d bytes, but received already %d bytes\n",
       node_id, Simulator::Now().GetSeconds(), requested_content_length, m_bytesRecv);
     }
-
   }
 
   //fprintf(stderr, "Client(%d)::HandleRead(time=%f) handled %d bytes this time\n", node_id, Simulator::Now().GetSeconds(), bytes_recv_this_time);
