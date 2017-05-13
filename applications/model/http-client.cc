@@ -431,6 +431,8 @@ HttpClientApplication::ConnectionComplete (Ptr<Socket> socket)
   fprintf(stderr, "Client successfully connected at time=%f\n", Simulator::Now().GetSeconds());
 
   m_success_connecting++;
+
+
   // Get ready to receive.
   socket->SetRecvCallback (MakeCallback (&HttpClientApplication::HandleRead, this));
 }
@@ -636,13 +638,12 @@ HttpClientApplication::ParseResponseHeader(const uint8_t* buffer, size_t len, in
 
   } else
   {
-    fprintf(stderr, "Not sure what this response header means\n");
-    fprintf(stderr, "Result=%s\n", strbuffer);
-    return -1;
+    //fprintf(stderr, "Not sure what this response header means\n");
+    //fprintf(stderr, "Result=%s\n", strbuffer);
   }
 
 
-  return 0;
+  return 1;
 }
 
 
@@ -695,23 +696,33 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
 
   uint32_t bytes_recv_this_time = 0;
 
-  while (true){
+  while (true)
+  {
     packet = socket->RecvFrom (from);
-    if (!(packet)){
+
+    if (!(packet))
+    {
       break;
     }
+
+
     packet->RemoveAllPacketTags ();
     packet->RemoveAllByteTags ();
     // PARSE PACKET
     size_t packet_size = packet->CopyData(_tmpbuffer, packet->GetSize());
     _tmpbuffer[packet_size] = '\0';
 
-    bytes_recv_this_time += packet_size;
-    if (m_is_first_packet){
-      m_is_first_packet = false;
+
+    if (m_is_first_packet)
+    {
       // parse header
       int status_code = 0;
       int where = ParseResponseHeader(_tmpbuffer, packet_size, &status_code, &(this->requested_content_length));
+      if (where == -1){
+        break;
+      }{
+                m_is_first_packet = false;
+      }
       //fprintf(stderr, "content starts at position %d, with length %d (status code %d)\n", where, requested_content_length, status_code);
       m_bytesRecv += packet_size - where;
 
@@ -727,8 +738,9 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
 
         fclose(fp);
       }
-    } 
-    else {
+
+
+    } else {
       m_bytesRecv += packet_size;
 
       // write to file
@@ -742,8 +754,6 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
         fclose(fp);
       }
     }
-
-
     // we have received the whole file!
     if (m_bytesRecv == requested_content_length)
     {
@@ -753,14 +763,14 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
     }
     else if (m_bytesRecv > requested_content_length)
     {
-      //OnFileReceived(0, requested_content_length);
-      //break;
+      OnFileReceived(0, requested_content_length);
       fprintf(stderr, "Client(%d)::HandleRead(time=%f) Expected only %d bytes, but received already %d bytes\n",
       node_id, Simulator::Now().GetSeconds(), requested_content_length, m_bytesRecv);
+      break;
     }
-  }
 
+  }
   //fprintf(stderr, "Client(%d)::HandleRead(time=%f) handled %d bytes this time\n", node_id, Simulator::Now().GetSeconds(), bytes_recv_this_time);
 }
-
+  
 } // Namespace ns3
