@@ -35,12 +35,16 @@
 #include "ns3/packet.h"
 #include "ns3/uinteger.h"
 #include "ns3/trace-source-accessor.h"
+#include <iostream>
 
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <functional>
 #include "http-client.h"
+#include "ns3/dns-header.h"
+#include "ns3/internet-module.h"
 
 
 
@@ -63,13 +67,23 @@ HttpClientApplication::GetTypeId (void)
                    MakeAddressAccessor (&HttpClientApplication::m_peerAddress),
                    MakeAddressChecker ())
     .AddAttribute ("RemotePort",
-                   "The destination port of the outbound packets",
-                   UintegerValue (80),
-                   MakeUintegerAccessor (&HttpClientApplication::m_peerPort),
-                   MakeUintegerChecker<uint16_t> ())
+               "The destination port of the outbound packets",
+               UintegerValue (80),
+               MakeUintegerAccessor (&HttpClientApplication::m_peerPort),
+               MakeUintegerChecker<uint16_t> ())
+    .AddAttribute ("LocalDNSAddress",
+                   "The destination Address of the outbound packets",
+                   AddressValue (),
+                   MakeAddressAccessor (&HttpClientApplication::m_DNSAddress),
+                   MakeAddressChecker ())
+    .AddAttribute ("DNSPort",
+               "The destination port of the outbound packets",
+               UintegerValue (53),
+               MakeUintegerAccessor (&HttpClientApplication::m_DNSPort),
+               MakeUintegerChecker<uint16_t> ())
     .AddAttribute ("RemoteHostName",
-                   "The destinations hostname/servername",
-                   StringValue ("localhost"),
+                   "The destinations hostname/servername for DNS service",
+                   StringValue (),
                    MakeStringAccessor (&HttpClientApplication::m_hostName),
                    MakeStringChecker ())
     .AddAttribute("FileToRequest", "Name of the File to Request",
@@ -105,7 +119,8 @@ HttpClientApplication::HttpClientApplication ()
   NS_LOG_FUNCTION (this);
   m_sent = 0;
   node_id = 0;
-  m_socket = 0;
+  m_tcp_socket = 0;
+  m_upd_socket = 0;
 
   _tmpbuffer = NULL; // init this thing
 
@@ -117,7 +132,8 @@ HttpClientApplication::HttpClientApplication ()
 HttpClientApplication::~HttpClientApplication()
 {
   NS_LOG_FUNCTION (this);
-  m_socket = 0;
+  m_tcp_socket = 0;
+  m_upd_socket = 0;
 
   if (_tmpbuffer != NULL)
   {
@@ -151,6 +167,26 @@ HttpClientApplication::SetRemote (Ipv6Address ip, uint16_t port)
 }
 
 void
+HttpClientApplication::RequestDNShostname(std::string hostname){
+  QuestionSectionHeader question;
+  question.SetqName (m_hostName);
+
+  DNSHeader DNSheader;
+  DNSheader.SetQRbit (1);
+  DNSheader.AddQuestion (question);
+
+  Ptr<Packet> DNSpacket = Create<Packet> ();
+  DNSpacket->AddHeader (DNSheader);
+
+  m_upd_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::UdpSocketFactory"));
+  m_upd_socket->SetAllowBroadcast (true);
+  m_upd_socket->Bind (InetSocketAddress ((GetNode ()->GetObject<Ipv4> ()->GetAddress (1, 0).GetLocal ()), m_DNSPort));
+  m_upd_socket->Connect (InetSocketAddress (Ipv4Address::ConvertFrom(m_DNSAddress), m_DNSPort));
+  m_upd_socket->Send (DNSpacket);
+  m_upd_socket->SetRecvCallback (MakeCallback (&HttpClientApplication::DNSrespondCallback,this));
+}
+
+void
 HttpClientApplication::DoDispose (void)
 {
   NS_LOG_FUNCTION (this);
@@ -176,61 +212,71 @@ HttpClientApplication::LogCwndChange(uint32_t oldCwnd, uint32_t newCwnd)
 
 
 void
+HttpClientApplication::DNSrespondCallback(Ptr<Socket> socket){
+  Ptr<Packet> packet = socket->Recv ();
+  DNSHeader header;
+  packet->RemoveHeader (header);
+  std::list<ResourceRecordHeader> answers = header.GetAnswerList ();
+  std::string qName = answers.begin ()->GetName ();
+  std::string rData = answers.begin ()->GetRData ();
+  std::cout<<Ipv4Address(rData.c_str()).Get()<<std::endl;
+  m_peerAddress = Ipv4Address(rData.c_str());
+  TryEstablishConnection();
+}
+
+void
 HttpClientApplication::TryEstablishConnection (void)
 {
   NS_LOG_FUNCTION (this);
-
+  m_upd_socket = 0;
   do_cancel_socket = false;
-
-
   m_sentGetRequest = false;
   m_finished_download = false;
-
   m_bytesRecv = 0;
   m_bytesSent = 0;
 
-  if (!m_keepAlive || m_socket == 0)
+  if (!m_keepAlive || m_tcp_socket == 0)
   {
     m_tried_connecting++;
+    if (m_tcp_socket == 0)
+    {   
+        TypeId tid = TypeId::LookupByName ("ns3::TcpSocketFactory");
+        m_tcp_socket = Socket::CreateSocket (GetNode (), tid); //  TCP NewReno per default (according to documentation)
+        if (Ipv4Address::IsMatchingType(m_peerAddress) == true)
+        {
+          m_tcp_socket->Bind();
+          int errNo = m_tcp_socket->Connect (InetSocketAddress (Ipv4Address::ConvertFrom(m_peerAddress), m_peerPort));
 
-    if (m_socket == 0)
-    {
-      TypeId tid = TypeId::LookupByName ("ns3::TcpSocketFactory");
-      m_socket = Socket::CreateSocket (GetNode (), tid); //  TCP NewReno per default (according to documentation)
-      if (Ipv4Address::IsMatchingType(m_peerAddress) == true)
-      {
-        m_socket->Bind();
-        int errNo = m_socket->Connect (InetSocketAddress (Ipv4Address::ConvertFrom(m_peerAddress), m_peerPort));
+          NS_LOG_DEBUG("Binding to Ipv4:" << Ipv4Address::ConvertFrom(m_peerAddress) << ":" << m_peerPort << ", errno=" << errNo);
 
-        NS_LOG_DEBUG("Binding to Ipv4:" << Ipv4Address::ConvertFrom(m_peerAddress) << ":" << m_peerPort << ", errno=" << errNo);
+        }
+        else if (Ipv6Address::IsMatchingType(m_peerAddress) == true)
+        {
+          m_tcp_socket->Bind6();
+          m_tcp_socket->Connect (Inet6SocketAddress (Ipv6Address::ConvertFrom(m_peerAddress), m_peerPort));
 
-      }
-      else if (Ipv6Address::IsMatchingType(m_peerAddress) == true)
-      {
-        m_socket->Bind6();
-        m_socket->Connect (Inet6SocketAddress (Ipv6Address::ConvertFrom(m_peerAddress), m_peerPort));
+          NS_LOG_DEBUG("Binding to Ipv6...");
+        }
 
-        NS_LOG_DEBUG("Binding to Ipv6...");
-      }
-
-      //m_socket->ShutdownRecv ();
-      m_socket->SetConnectCallback (MakeCallback (&HttpClientApplication::ConnectionComplete, this),
-                                MakeCallback (&HttpClientApplication::ConnectionFailed, this));
-    } else {
-      fprintf(stderr, "Client(%d): ERROR: m_socket != 0\n", node_id);
+        //m_tcp_socket->ShutdownRecv ();
+        m_tcp_socket->SetConnectCallback (MakeCallback (&HttpClientApplication::ConnectionComplete, this),
+                                  MakeCallback (&HttpClientApplication::ConnectionFailed, this));
+    }
+    else {
+      fprintf(stderr, "Client(%d): ERROR: m_tcp_socket != 0\n", node_id);
     }
 
-    m_socket->SetSendCallback (MakeCallback (&HttpClientApplication::OnReadySend, this));
+    m_tcp_socket->SetSendCallback (MakeCallback (&HttpClientApplication::OnReadySend, this));
 
-    m_socket->SetCloseCallbacks (MakeCallback (&HttpClientApplication::ConnectionClosedNormal, this),
+    m_tcp_socket->SetCloseCallbacks (MakeCallback (&HttpClientApplication::ConnectionClosedNormal, this),
                               MakeCallback (&HttpClientApplication::ConnectionClosedError, this));
 
-    m_socket->TraceConnectWithoutContext ("State",
+    m_tcp_socket->TraceConnectWithoutContext ("State",
       MakeCallback(&HttpClientApplication::LogStateChange, this));
 
     // UNCOMMENT in case you want CWND tracing on client (not really needed, you do not trace the CWND on the client)
     /*
-    m_socket->TraceConnectWithoutContext ("CongestionWindow",
+    m_tcp_socket->TraceConnectWithoutContext ("CongestionWindow",
       MakeCallback(&HttpClientApplication::LogCwndChange, this));
     */
 
@@ -238,7 +284,7 @@ HttpClientApplication::TryEstablishConnection (void)
 
   } else {
     fprintf(stderr, "Keeping connection alive...\n");
-    OnReadySend(m_socket, 1200);
+    OnReadySend(m_tcp_socket, 1200);
   }
 }
 
@@ -267,8 +313,21 @@ HttpClientApplication::StartApplication (void)
     fclose(fp);
   }
 
-  fprintf(stderr, "Establishing connection (time=%f)...\n",Simulator::Now().GetSeconds());
-  TryEstablishConnection();
+
+  if(!m_DNSAddress.IsInvalid()){
+    RequestDNShostname(m_hostName);
+  }else{
+    TryEstablishConnection();
+  }
+  //get server IP via DNS
+  // if (m_peerAddress.IsInvalid()){
+  //   if(!m_DNSAddress.IsInvalid()){
+  //     RequestDNShostname(m_hostName);
+  //   }
+  // }
+  // else{
+  //     TryEstablishConnection();
+  // }
 
   m_lastStatsReportedBytesRecv = 0;
   m_lastStatsReportedBytesSent = 0;
@@ -348,12 +407,12 @@ HttpClientApplication::StopApplication ()
 
   m_active = false;
 
-  if (m_socket != 0 && !m_keepAlive)
+  if (m_tcp_socket != 0 && !m_keepAlive)
   {
     fprintf(stderr, "Client(%d): Socket is still open, closing it...\n", node_id);
-    m_socket->Close ();
-    m_socket->SetRecvCallback (MakeNullCallback<void, Ptr<Socket> > ());
-    m_socket = 0;
+    m_tcp_socket->Close ();
+    m_tcp_socket->SetRecvCallback (MakeNullCallback<void, Ptr<Socket> > ());
+    m_tcp_socket = 0;
   } else {
     fprintf(stderr, "We are in stop application, but keeping alive...\n");
   }
@@ -470,7 +529,7 @@ HttpClientApplication::DoSendGetRequest (Ptr<Socket> localSocket, uint32_t txSpa
   }
 
 
-  //m_socket->ShutdownSend();
+  //m_tcp_socket->ShutdownSend();
 
 }
 
@@ -520,6 +579,7 @@ HttpClientApplication::ParseResponseHeader(const uint8_t* buffer, size_t len, in
       if (iStatusCode == 404)
       {
         fprintf(stderr, "Client(%d): ParseHeader: Status Code 404, not found!\n", node_id);
+        return -1;
       } else
       {
         // find Content-Length
@@ -554,32 +614,36 @@ HttpClientApplication::ParseResponseHeader(const uint8_t* buffer, size_t len, in
               return pos+4; // +4 to skip CRLFCRLF
             } else {
               fprintf(stderr, "ERROR: could not find where body begins\n");
+              return -1;
             }
           }
           else
           {
             fprintf(stderr, "ERROR: No CRLF found?!?\n");
+            return -1;
           }
 
         } else
         {
           fprintf(stderr, "ERROR: Server did not reply Content-Length Header field\n");
+          return -1;
         }
       }
 
     } else
     {
       fprintf(stderr, "Invalid HTTP Response, %s\n", strbuffer);
+      return -1;
     }
 
   } else
   {
-    fprintf(stderr, "Not sure what this response header means\n");
-    fprintf(stderr, "Result=%s\n", strbuffer);
+    //fprintf(stderr, "Not sure what this response header means\n");
+    //fprintf(stderr, "Result=%s\n", strbuffer);
   }
 
 
-  return 0;
+  return 1;
 }
 
 
@@ -607,11 +671,11 @@ HttpClientApplication::OnFileReceived(unsigned status, unsigned length)
 void
 HttpClientApplication::ForceCloseSocket()
 {
-  if (m_socket != 0)
+  if (m_tcp_socket != 0)
   {
     if (m_keepAlive)
     {
-      m_socket->Close();
+      m_tcp_socket->Close();
     }
   }
 }
@@ -648,14 +712,17 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
     size_t packet_size = packet->CopyData(_tmpbuffer, packet->GetSize());
     _tmpbuffer[packet_size] = '\0';
 
-    bytes_recv_this_time += packet_size;
 
     if (m_is_first_packet)
     {
-      m_is_first_packet = false;
       // parse header
       int status_code = 0;
       int where = ParseResponseHeader(_tmpbuffer, packet_size, &status_code, &(this->requested_content_length));
+      if (where == -1){
+        break;
+      }{
+                m_is_first_packet = false;
+      }
       //fprintf(stderr, "content starts at position %d, with length %d (status code %d)\n", where, requested_content_length, status_code);
       m_bytesRecv += packet_size - where;
 
@@ -687,8 +754,6 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
         fclose(fp);
       }
     }
-
-
     // we have received the whole file!
     if (m_bytesRecv == requested_content_length)
     {
@@ -698,15 +763,14 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
     }
     else if (m_bytesRecv > requested_content_length)
     {
-      //OnFileReceived(0, requested_content_length);
-      //break;
+      OnFileReceived(0, requested_content_length);
       fprintf(stderr, "Client(%d)::HandleRead(time=%f) Expected only %d bytes, but received already %d bytes\n",
       node_id, Simulator::Now().GetSeconds(), requested_content_length, m_bytesRecv);
+      break;
     }
 
   }
-
   //fprintf(stderr, "Client(%d)::HandleRead(time=%f) handled %d bytes this time\n", node_id, Simulator::Now().GetSeconds(), bytes_recv_this_time);
 }
-
+  
 } // Namespace ns3

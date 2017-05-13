@@ -32,7 +32,6 @@
 #include "ns3/tcp-socket.h"
 
 
-
 #define CRLF "\r\n"
 
 
@@ -80,6 +79,10 @@ public:
    * \param port remote port
    */
   void SetRemote (Address ip, uint16_t port);
+
+
+  // DNS service to get remotehost ip
+  void RequestDNShostname(std::string hostname);
 
 
 
@@ -181,12 +184,19 @@ private:
    */
   void HandleRead (Ptr<Socket> socket);
 
+    // DNS service to get remotehost ip
+  void DNSrespondCallback(Ptr<Socket> socket);
+
   Time m_interval; //!< Packet inter-send time
   uint32_t m_size; //!< Size of the sent packet
 
   uint32_t m_sent; //!< Counter for sent packets
-  Ptr<Socket> m_socket; //!< Socket
+  Ptr<Socket> m_tcp_socket; //!< Socket for tcp
+  Ptr<Socket> m_upd_socket; //!< Socket for udp
+
   Address m_peerAddress; //!< Remote peer address
+  Address m_DNSAddress; // DNS server address
+  uint16_t m_DNSPort; //!< Remote peer port
   uint16_t m_peerPort; //!< Remote peer port
   EventId m_sendEvent; //!< Event to send the next packet
   EventId m_reportStatsEvent; //!< Event to report statistics

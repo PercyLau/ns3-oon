@@ -24,6 +24,7 @@
 #include <cstring>
 #include <iostream>
 #include <iomanip>
+#include <assert.h>
 
 namespace ns3 {
 
@@ -35,7 +36,6 @@ Address::Address ()
 {
   // Buffer left uninitialized
   NS_LOG_FUNCTION (this);
-
 }
 
 Address::Address (uint8_t type, const uint8_t *buffer, uint8_t len)
@@ -46,13 +46,17 @@ Address::Address (uint8_t type, const uint8_t *buffer, uint8_t len)
   NS_ASSERT (m_len <= MAX_SIZE);
   std::memcpy (m_data, buffer, m_len);
 }
-Address::Address (const Address & address)
+
+Address::Address (const Address &address)
   : m_type (address.m_type),
     m_len (address.m_len)
 {
-  NS_ASSERT (m_len <= MAX_SIZE);
-  std::memcpy (m_data, address.m_data, m_len);
+  //NS_ASSERT_MSG (address.m_len <= MAX_SIZE, int(address.m_len));
+  NS_ASSERT_MSG (address.m_len <= MAX_SIZE, int(m_len));
+  if (address.m_data != NULL)
+    std::memcpy (m_data, address.m_data, m_len);
 }
+
 Address &
 Address::operator = (const Address &address)
 {

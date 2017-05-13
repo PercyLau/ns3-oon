@@ -22,16 +22,11 @@
 #define NODE_H
 
 #include <vector>
-#include <map>
 
 #include "ns3/object.h"
 #include "ns3/callback.h"
 #include "ns3/ptr.h"
 #include "ns3/net-device.h"
-#include "ns3/event-id.h"
-#include "ns3/random-variable-stream.h"
-
-#include "node-packet-queue.h"
 
 namespace ns3 {
 
@@ -130,55 +125,6 @@ public:
    */
   uint32_t GetNApplications (void) const;
 
-// \name for queue the packets at the nodes
-// \{  
-  /**
-  * \This method is implemented to return the node queue size.
-  * This part is added By janaka Wijekoon
-  */  
-  uint16_t GetBufferSize(void);
-  
-	/**
-	 * \brief get the number of backets that have been transmitted / received from/to a netdevice
-	 * \param device the netdevice
-   * \returns the number of packets
-   */
-  uint64_t GetNofPacketsOfDevice (Ptr<NetDevice> device);
-	
-	/**
-	 * \brief get the average packet size of all received/transmitted packets from/to a netdevice
-	 * \param device the netdevice
-	 * \returns the average packet size
-	 */
-	uint64_t GetAveragePacketSizeOfDevice (Ptr<NetDevice> device);
-	
-	/**
-	 * \brief get the cumulative average packet size of the entire router.
-	 * \returns the average packet size of the router
-	 */	
-	double GetAveragePacketSizeOfRouter (void);	
-	
-	/**
-	 * \brief Get the Mue of the server
-	 * \returns the mue value
-	 */
-	double GetRouterMue(void);
-
-	/**
-	 * \brief Get the packet per second value of the serve
-	 * \returns the service rate
-	 */	
-	double GetRouterServiceRate (void);
-
-	/**
-	 * \brief Get and Set the arrival rate of the router
-	 * \returns the average arrival rate of the router
-	 */
-	double GetRouterLambda (void);
-	
-	void SetRouterLambda (uint16_t lambda);
-// \}
-
   /**
    * A protocol handler
    *
@@ -244,6 +190,8 @@ public:
    * device-added event.
    */
   void UnregisterDeviceAdditionListener (DeviceAdditionListener listener);
+
+
 
   /**
    * \returns true if checksums are enabled, false otherwise.
@@ -329,66 +277,6 @@ private:
   std::vector<Ptr<Application> > m_applications; //!< Applications associated to this node
   ProtocolHandlerList m_handlers; //!< Protocol handlers in the node
   DeviceAdditionListenerList m_deviceAdditionListeners; //!< Device addition listeners in the node
-  
-// \name for queue the packets at the nodes
-// \{
-
-  /**
-   * \brief schedule the next transmit for the protocol layer.
-   * this has been implemented to call over every given time interval.
-   * \param device the netdevice of the packet transmit scheduler
-   */
-	void ScheduleTransmit(Ptr<NetDevice> device);
-	
-	 /**
-   * \brief This method is called by the ScheduleTransmit method every given 
-   * time interval (The time interval is vary according to the service rate 
-   * of the router). This is similar to the default function "ReceiveFromDevice".
-   * however, at the time, the ReceiveFromDevice callback is triggered,
-   * instead of sending the packet to the protocol handling layer, the packet will be
-   * buffered in to the queue. Then, for each service rate of the router (i.e., mue)
-   * this method will be called and handle (i.e., forward to the protocol handler) one packet at a time. 
-   */
-	void ReceiveFromBuffer(void);
-	
-  /**
-  * \brief the function developed for debugin purposes.
-  * every m_printDuration the function will output number of protocol messages
-  */
-  void PrintStats ();		
-	
-	NodeQueue m_nodePacketBuffer; //!< the object of the packet queue
-	EventId m_nextTransmission; //!< event to schedule the next packet transmission to the protocol layer
-	uint8_t m_initiator; //!< initiate the packet queue
-	uint64_t m_totPacketCount; //!< total packets received to the device
-	double m_Mue; //!< service rate
-	double m_Lambda; //!< packet arrival rate
-	double m_serviceRate; //!< service rate of the router
-	
-  struct DeviceStats {
-    uint64_t RxCount; //!< Number of received packet to the NetDevice 
-    uint64_t avgPacketSize; //!< Average packet size handled by the NetDevice
-    uint64_t TxCount; //!< Number of packets sent from the NetDevice
-  };
-
-  // Container for the NetDevice and its Statistics
-  typedef std::list<std::pair <Ptr<NetDevice>, DeviceStats> > deviceStat;
-
-  // Const Iterator for the NetDevice and its Statistics
-  typedef std::list<std::pair <Ptr<NetDevice>, DeviceStats> >::const_iterator deviceStatCI;
-
-  // Iterator for the NetDevice and its Statistics
-  typedef std::list<std::pair <Ptr<NetDevice>, DeviceStats> >::iterator deviceStatI;
-  
-  deviceStat m_deviceStats;
-
-  Ptr<UniformRandomVariable> m_rng; //!< Rng stream.
-  
-// \name for debugging
-// \{
-  EventId m_outEvent; //!< Next statistic printing even
-// \}  
-// \}
 };
 
 } // namespace ns3

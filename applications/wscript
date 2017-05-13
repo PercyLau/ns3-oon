@@ -1,5 +1,5 @@
 def build(bld):
-    module = bld.create_ns3_module('applications', ['internet', 'config-store','stats'])
+    module = bld.create_ns3_module('applications', ['internet', 'config-store','stats','dns'])
     module.use.append('DASH')
     module.use.append('BOOST')
     module.source = [
