@@ -76,7 +76,10 @@ RandomPropagationDelayModel::~RandomPropagationDelayModel ()
 Time
 RandomPropagationDelayModel::GetDelay (Ptr<MobilityModel> a, Ptr<MobilityModel> b) const
 {
-  return Seconds (m_variable->GetValue ());
+  double distance = a->GetDistanceFrom (b);
+  double seconds = (m_variable->GetValue ()+1)*distance / 299792458; //light speed in vacuum
+  //double seconds = m_variable->GetValue ();
+  return Seconds (seconds);
 }
 
 int64_t

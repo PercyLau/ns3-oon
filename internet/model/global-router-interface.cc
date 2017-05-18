@@ -840,8 +840,7 @@ GlobalRouter::ProcessSingleBroadcastLink (Ptr<NetDevice> nd, GlobalRoutingLSA *p
         {
           Ipv4Address networkHere = addrLocal.CombineMask (maskLocal);
           Ipv4Address networkThere = desigRtr.CombineMask (maskLocal);
-          NS_ABORT_MSG_UNLESS (networkHere == networkThere, 
-                               "GlobalRouter::ProcessSingleBroadcastLink(): Network number confusion");
+          NS_ABORT_MSG_UNLESS (networkHere == networkThere,  "GlobalRouter::ProcessSingleBroadcastLink(): Network number confusion");
         }
       if (desigRtr == addrLocal) 
         {

@@ -140,6 +140,11 @@ DASHPlayerTracer::DASHPlayerTracer(boost::shared_ptr<std::ofstream> os, Ptr<Node
 
   m_node = node_id_str.str();
 
+  std::string name = Names::FindName(node);
+  if (!name.empty()) {
+    m_node = name;
+  }
+
   // if this is a node with only 1 application, connect directly to the player tracer (if available)
   if (node->GetNApplications() == 1)
   {

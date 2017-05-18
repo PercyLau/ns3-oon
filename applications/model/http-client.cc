@@ -764,6 +764,7 @@ HttpClientApplication::HandleRead (Ptr<Socket> socket)
     else if (m_bytesRecv > requested_content_length)
     {
       OnFileReceived(0, requested_content_length);
+      m_bytesRecv = m_bytesRecv-requested_content_length;
       fprintf(stderr, "Client(%d)::HandleRead(time=%f) Expected only %d bytes, but received already %d bytes\n",
       node_id, Simulator::Now().GetSeconds(), requested_content_length, m_bytesRecv);
       break;
